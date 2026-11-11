@@ -1,0 +1,13 @@
+{
+  "name": "SwiftFiles",
+  "short_name": "SwiftFiles",
+  "description": "Smart personal document organizer with manual field extraction, PIN security, and theme customizer.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6366f1",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": []
+}
