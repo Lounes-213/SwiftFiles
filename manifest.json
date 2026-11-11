@@ -1,23 +1,45 @@
 {
+  "id": "/",
   "name": "SwiftFiles - Document & Data Vault",
   "short_name": "SwiftFiles",
   "description": "Smart personal document manager with custom fields, fingerprint biometric security, and offline support.",
+  "lang": "en-US",
+  "dir": "auto",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#d97706",
   "categories": ["productivity", "utilities"],
   "icons": [
     {
-      "src": "/src/assets/images/id_card_algeria_sample_1794434833800.jpg",
+      "src": "/app-icon-192.png",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "/src/assets/images/id_card_algeria_sample_1794434833800.jpg",
+      "src": "/app-icon-512.png",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-narrow.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "SwiftFiles Mobile App View"
+    },
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "SwiftFiles Desktop App View"
     }
   ]
 }

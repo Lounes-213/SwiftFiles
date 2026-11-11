@@ -11,29 +11,38 @@ interface CreateFileModalProps {
   onClose: () => void;
   language: Language;
   themeColor?: ThemeColor;
+  defaultFolderId?: string;
 }
 
-const CreateFileModal: React.FC<CreateFileModalProps> = ({ folders, onSave, onClose, language, themeColor = 'indigo' }) => {
+const CreateFileModal: React.FC<CreateFileModalProps> = ({ 
+  folders, onSave, onClose, language, themeColor = 'indigo', defaultFolderId 
+}) => {
   const t = translations[language];
   const theme = getThemeClasses(themeColor as ThemeColor);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [title, setTitle] = useState('');
   const [note, setNote] = useState('');
-  const [folderId, setFolderId] = useState<string | undefined>(undefined);
-  const [image, setImage] = useState<string | undefined>(undefined);
+  const [folderId, setFolderId] = useState<string | undefined>(defaultFolderId);
+  const [images, setImages] = useState<string[]>([]);
   
   const [fields, setFields] = useState<FileField[]>([]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+    const selectedFiles = Array.from(e.target.files || []);
+    if (selectedFiles.length > 0) {
+      selectedFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImages(prev => [...prev, reader.result as string]);
+        };
+        reader.readAsDataURL(file as Blob);
+      });
     }
+  };
+
+  const removeImageAt = (index: number) => {
+    setImages(prev => prev.filter((_, i) => i !== index));
   };
 
   const addFieldRow = () => {
@@ -63,7 +72,8 @@ const CreateFileModal: React.FC<CreateFileModalProps> = ({ folders, onSave, onCl
       title: title.trim(),
       note: note.trim() || undefined,
       folderId,
-      image,
+      image: images[0] || undefined,
+      images: images.length > 0 ? images : undefined,
       fields: validFields,
       starred: false,
     };
@@ -88,25 +98,53 @@ const CreateFileModal: React.FC<CreateFileModalProps> = ({ folders, onSave, onCl
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Image Upload Area */}
+          {/* Multiple Image & File Upload Area */}
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase mb-2">{t.attachImage}</label>
+            <div className="flex justify-between items-center mb-2">
+              <label className="text-xs font-bold text-slate-400 uppercase">{t.attachImage} ({images.length})</label>
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className={`text-xs font-bold ${theme.textPrimary} flex items-center gap-1 hover:underline`}
+              >
+                <Plus size={14} />
+                Add Photos / Files
+              </button>
+            </div>
+
             <input 
               type="file" 
               ref={fileInputRef} 
               accept="image/*" 
+              multiple 
               className="hidden" 
               onChange={handleImageUpload} 
             />
-            {image ? (
-              <div className="relative w-full h-40 bg-slate-100 dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700">
-                <img src={image} className="w-full h-full object-contain" alt="Attached Scan" />
+
+            {images.length > 0 ? (
+              <div className="grid grid-cols-3 gap-3">
+                {images.map((imgSrc, idx) => (
+                  <div key={idx} className="relative aspect-square bg-slate-100 dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 group">
+                    <img src={imgSrc} className="w-full h-full object-cover" alt={`Attachment ${idx + 1}`} />
+                    <button
+                      type="button"
+                      onClick={() => removeImageAt(idx)}
+                      className="absolute top-1.5 right-1.5 bg-red-500/90 text-white p-1 rounded-lg shadow-md hover:bg-red-600 transition-colors"
+                    >
+                      <X size={14} />
+                    </button>
+                    <span className="absolute bottom-1.5 left-1.5 bg-black/60 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-md">
+                      #{idx + 1}
+                    </span>
+                  </div>
+                ))}
                 <button
                   type="button"
-                  onClick={() => setImage(undefined)}
-                  className="absolute top-3 right-3 bg-red-500 text-white p-2 rounded-xl shadow-md"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="aspect-square border-2 border-dashed border-slate-200 dark:border-slate-700 hover:border-slate-400 rounded-2xl flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 transition-all bg-slate-50 dark:bg-slate-800/40"
                 >
-                  <X size={16} />
+                  <Plus size={20} />
+                  <span className="text-[10px] font-bold mt-1">Add More</span>
                 </button>
               </div>
             ) : (
@@ -118,7 +156,7 @@ const CreateFileModal: React.FC<CreateFileModalProps> = ({ folders, onSave, onCl
                   <ImageIcon size={24} />
                   <Camera size={24} />
                 </div>
-                <span className="text-xs font-bold">{t.importFileBtn}</span>
+                <span className="text-xs font-bold">{t.importFileBtn} (Select Multiple)</span>
               </div>
             )}
           </div>

@@ -12,7 +12,7 @@ import WavyPlusButton from './components/WavyPlusButton';
 import ProLogo from './components/ProLogo';
 import { 
   Home, Folder as FolderIcon, Star, Settings, Plus, 
-  Lock, Search, X, FileText 
+  Lock, Search, X, FileText, Download 
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx, type ClassValue } from 'clsx';
@@ -27,6 +27,7 @@ const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'home' | 'starred' | 'folders' | 'settings'>('home');
   const [searchQuery, setSearchQuery] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   
   const [language, setLanguage] = useState<Language>(() => {
     const saved = localStorage.getItem('swiftfiles_lang');
@@ -51,6 +52,25 @@ const App: React.FC = () => {
   const t = translations[language];
   const theme = getThemeClasses(appConfig.themeColor);
 
+  // Listen for PWA install prompt
+  useEffect(() => {
+    const handleBeforeInstall = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+  }, []);
+
+  const handleInstallPWA = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => setDeferredPrompt(null));
+    } else {
+      alert(t.installBannerDesc);
+    }
+  };
+
   // Initial Theme & Data Loading
   useEffect(() => {
     const savedFiles = localStorage.getItem('swiftfiles_items');
@@ -58,49 +78,7 @@ const App: React.FC = () => {
     if (savedFiles) {
       setFiles(JSON.parse(savedFiles));
     } else {
-      const initialSamples: FileItem[] = [
-        {
-          id: 'sample-1',
-          timestamp: Date.now() - 3600000 * 2,
-          title: "Carte Nationale d'Identité",
-          note: "Biometric ID card details for 1-tap copy",
-          image: "/src/assets/images/id_card_algeria_sample_1794434833800.jpg",
-          starred: true,
-          fields: [
-            { id: 'f1', label: 'N° Card NIN', value: '10928374129', isSensitive: true },
-            { id: 'f2', label: 'Full Name', value: 'Emma Louise Clark' },
-            { id: 'f3', label: 'Date of Birth', value: '15 OCT 1993' },
-            { id: 'f4', label: 'Expiry Date', value: '28 SEP 2033' },
-          ]
-        },
-        {
-          id: 'sample-2',
-          timestamp: Date.now() - 3600000 * 24,
-          title: "Passeport Biométrique",
-          note: "International passport number & expiry date",
-          image: "/src/assets/images/passport_sample_1794434833992.jpg",
-          starred: true,
-          fields: [
-            { id: 'f1', label: 'Passport N°', value: 'E24681357', isSensitive: true },
-            { id: 'f2', label: 'Type', value: 'Biometric Passport' },
-            { id: 'f3', label: 'Expiry Date', value: '12 JAN 2034' },
-          ]
-        },
-        {
-          id: 'sample-3',
-          timestamp: Date.now() - 3600000 * 48,
-          title: "Permis de Conduire",
-          note: "Driver's license category B",
-          image: "/src/assets/images/drivers_license_sample_1794434835517.jpg",
-          starred: false,
-          fields: [
-            { id: 'f1', label: 'License N°', value: 'C1234567', isSensitive: true },
-            { id: 'f2', label: 'Full Name', value: 'Eleanor Jane Harper' },
-            { id: 'f3', label: 'Category', value: 'B (Light Vehicle)' },
-          ]
-        }
-      ];
-      setFiles(initialSamples);
+      setFiles([]);
     }
     if (savedFolders) setFolders(JSON.parse(savedFolders));
 

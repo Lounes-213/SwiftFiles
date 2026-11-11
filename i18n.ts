@@ -43,12 +43,23 @@ export const translations = {
     resetLogo: "Use Default S Logo",
 
     // Play Store Export
-    playStoreExport: "Google Play Store Export Guide",
-    playStoreTitle: "Publishing to Google Play Store",
-    playStoreStep1: "1. SwiftFiles is 100% PWA-ready with manifest.json & standalone display.",
-    playStoreStep2: "2. Visit PWABuilder.com or use Bubblewrap CLI to generate your Android APK/AAB bundle.",
-    playStoreStep3: "3. Upload the generated .aab package directly to Google Play Console!",
-    
+    playStoreExport: "Generate Android APK & AAB Release Files",
+    playStoreTitle: "Build & Export APK / AAB Packages",
+    playStoreStep1: "1. Your app URL is 100% PWA compliant with manifest.json & service worker.",
+    playStoreStep2: "2. Open PWABuilder.com and paste your live app URL to package APK & AAB instantly.",
+    playStoreStep3: "3. Download .aab for Google Play Store upload or .apk for direct phone sharing!",
+    downloadPlayStoreIcon: "Download 512x512 S-Icon for Play Store",
+    playStoreIconDesc: "Use this official 512x512 PNG S-Logo asset when filling the 'App Icon' field in Play Console.",
+
+    // Delete Confirmation & Install
+    confirmDeleteTitle: "Confirm Deletion",
+    confirmDeleteMsg: "Are you sure you want to delete this document? This action cannot be undone.",
+    confirmDeleteFolderMsg: "Are you sure you want to delete this folder?",
+    confirmBtn: "Yes, Delete",
+    installAppBtn: "Install App",
+    installBannerTitle: "Install SwiftFiles App",
+    installBannerDesc: "Add to home screen for instant offline access without internet!",
+
     // Fingerprint Security & Privacy
     security: "Fingerprint Security Lock",
     securityDesc: "Protect your documents with phone Fingerprint authentication",
@@ -113,12 +124,23 @@ export const translations = {
     resetLogo: "Utiliser le Logo S par Défaut",
 
     // Play Store Export
-    playStoreExport: "Guide d'Exportation Google Play Store",
-    playStoreTitle: "Publier sur Google Play Store",
-    playStoreStep1: "1. SwiftFiles est 100% compatible PWA avec manifest.json et mode autonome.",
-    playStoreStep2: "2. Allez sur PWABuilder.com ou utilisez Bubblewrap CLI pour générer votre APK/AAB Android.",
-    playStoreStep3: "3. Importez le fichier .aab généré directement dans Google Play Console!",
-    
+    playStoreExport: "Générer les Fichiers Release APK et AAB",
+    playStoreTitle: "Exporter les Fichiers APK / AAB Android",
+    playStoreStep1: "1. Votre lien est 100% conforme PWA avec manifest.json & service worker.",
+    playStoreStep2: "2. Ouvrez PWABuilder.com et collez votre lien pour générer le pack APK & AAB.",
+    playStoreStep3: "3. Téléchargez le fichier .aab pour Google Play Store et le .apk pour le partage direct!",
+    downloadPlayStoreIcon: "Télécharger l'icône S 512x512 pour Play Store",
+    playStoreIconDesc: "Utilisez cet asset PNG 512x512 officiel du logo S dans la section 'Icône de l'application' de Play Console.",
+
+    // Delete Confirmation & Install
+    confirmDeleteTitle: "Confirmer la Suppression",
+    confirmDeleteMsg: "Êtes-vous sûr de vouloir supprimer ce document? Cette action est irréversible.",
+    confirmDeleteFolderMsg: "Êtes-vous sûr de vouloir supprimer ce dossier?",
+    confirmBtn: "Oui, Supprimer",
+    installAppBtn: "Installer l'Application",
+    installBannerTitle: "Installer SwiftFiles sur le Téléphone",
+    installBannerDesc: "Ajouter à l'écran d'accueil pour un accès hors-ligne instantané sans connexion!",
+
     // Fingerprint Security & Privacy
     security: "Verrouillage par Empreinte Digitale",
     securityDesc: "Protégez vos documents avec la بصمة الأصبع du téléphone",
@@ -183,12 +205,23 @@ export const translations = {
     resetLogo: "استخدام شعار S الافتراضي",
 
     // Play Store Export
-    playStoreExport: "دليل النشر في متجر Google Play Store",
-    playStoreTitle: "نشر التطبيق في متجر متجر بلاي",
-    playStoreStep1: "1. تطبيق SwiftFiles جاهز 100% كـ PWA مع ملف manifest.json.",
-    playStoreStep2: "2. قم بزيارة PWABuilder.com أو استخدام Bubblewrap CLI لاستخراج حزمة APK / AAB.",
-    playStoreStep3: "3. ارفع حزمة .aab مباشرة في لوحة Google Play Console!",
-    
+    playStoreExport: "استخراج ملفات APK و AAB للنشر والمشاركة",
+    playStoreTitle: "إنشاء ملفات التطبيق (APK & AAB Release)",
+    playStoreStep1: "1. رابط تطبيقك جاهز 100% كـ PWA مع ملف manifest و service worker.",
+    playStoreStep2: "2. افتح موقع PWABuilder.com وأدخل رابط تطبيقك لاستخراج حزمة APK و AAB بضغطة واحدة.",
+    playStoreStep3: "3. قم بتحميل ملف .aab لنشره في متجر Play Store وملف .apk لمشاركته مباشرة في تلغرام وواتساب!",
+    downloadPlayStoreIcon: "تحميل أيقونة حرف S مقاس 512x512 لمتجر Play Store",
+    playStoreIconDesc: "استخدم ملف PNG هذا بمقاس 512x512 لشعار S في خانة أيقونة التطبيق داخل Play Console.",
+
+    // Delete Confirmation & Install
+    confirmDeleteTitle: "تأكيد الحذف النهائي",
+    confirmDeleteMsg: "هل أنت متأكد من رغبتك في حذف هذا المستند؟ لا يمكن التراجع عن هذه العملية.",
+    confirmDeleteFolderMsg: "هل أنت متأكد من حذف هذا المجلد بالكامل؟",
+    confirmBtn: "نعم، حذف نهائي",
+    installAppBtn: "تثبيت التطبيق على الهاتف",
+    installBannerTitle: "تثبيت تطبيق SwiftFiles",
+    installBannerDesc: "إضافة التطبيق للشاشة الرئيسية ليعمل 100% بدون إنترنت في أي وقت!",
+
     // Fingerprint Security & Privacy
     security: "قفل بصمة الأصبع",
     securityDesc: "حماية وثائقك الشخصية ببصمة أصبع الهاتف",

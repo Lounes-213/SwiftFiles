@@ -26,6 +26,7 @@ export interface FileItem {
   note?: string;
   fields: FileField[];
   image?: string; // Base64 or Image URL
+  images?: string[]; // Multiple attached images or document scans
   folderId?: string;
   starred?: boolean;
 }

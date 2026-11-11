@@ -4,7 +4,7 @@ import { translations } from '../i18n';
 import { getThemeClasses } from '../theme';
 import { 
   Globe, Shield, HelpCircle, Eye, ChevronRight, X, FileText, 
-  Moon, Sun, Palette, RotateCcw, Upload, Fingerprint, Share2 
+  Moon, Sun, Palette, RotateCcw, Upload, Fingerprint, Share2, Download, ExternalLink, Trash2 
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProLogo from './ProLogo';
@@ -272,13 +272,30 @@ const SettingsView: React.FC<SettingsViewProps> = ({
 
         <button
           onClick={() => setShowPrivacy(true)}
-          className="w-full p-5 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+          className="w-full p-5 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border-b border-slate-50 dark:border-slate-800"
         >
           <div className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
             <FileText size={20} className={theme.textPrimary} />
             <span className="font-bold text-sm">{t.privacyPolicy}</span>
           </div>
           <ChevronRight size={18} className="text-slate-300" />
+        </button>
+
+        <button
+          onClick={() => {
+            if (window.confirm("Clear all saved documents and reset local data?")) {
+              localStorage.removeItem('swiftfiles_items');
+              localStorage.removeItem('swiftfiles_folders');
+              window.location.reload();
+            }
+          }}
+          className="w-full p-5 flex items-center justify-between hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors text-rose-600 dark:text-rose-400"
+        >
+          <div className="flex items-center gap-3">
+            <Trash2 size={20} />
+            <span className="font-bold text-sm">Clear All Saved Documents</span>
+          </div>
+          <ChevronRight size={18} className="text-rose-300 dark:text-rose-700" />
         </button>
       </div>
 
@@ -304,12 +321,45 @@ const SettingsView: React.FC<SettingsViewProps> = ({
               </div>
 
               <div className="space-y-4 text-left">
-                <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/50 p-4 rounded-2xl">
-                  <p className="text-slate-800 dark:text-slate-200 text-sm font-bold mb-1">{t.playStoreStep1}</p>
+                <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/50 p-4 rounded-2xl space-y-3">
+                  <p className="text-slate-800 dark:text-slate-200 text-sm font-bold">{t.playStoreStep1}</p>
                   <p className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed">{t.playStoreStep2}</p>
+                  
+                  <a
+                    href="https://www.pwabuilder.com/reportcard?site=https://ais-pre-24cbjoeogrliniurqyx3vo-381559712290.europe-west2.run.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-sm transition-colors"
+                  >
+                    <ExternalLink size={16} />
+                    Open PWABuilder (1-Click APK & AAB Generator)
+                  </a>
                 </div>
-                <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-2xl">
+
+                {/* 512x512 Play Store App Icon Download Box */}
+                <div className="bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl space-y-3">
+                  <div className="flex items-center gap-4">
+                    <img src="/app-icon-512.png" alt="512x512 Play Store S Icon" className="w-16 h-16 rounded-2xl shadow-md border border-amber-400 object-cover" />
+                    <div className="flex-1">
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white">{t.downloadPlayStoreIcon}</h4>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{t.playStoreIconDesc}</p>
+                    </div>
+                  </div>
+                  <a
+                    href="/app-icon-512.png"
+                    download="swiftfiles_playstore_icon_512x512.png"
+                    className={`w-full py-2.5 px-4 ${theme.bgPrimary} text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity`}
+                  >
+                    <Download size={16} />
+                    {t.downloadPlayStoreIcon}
+                  </a>
+                </div>
+
+                <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-2xl space-y-2">
                   <p className="text-slate-800 dark:text-slate-200 text-xs leading-relaxed font-bold">{t.playStoreStep3}</p>
+                  <div className="p-2.5 bg-slate-100 dark:bg-slate-900 rounded-xl text-[11px] font-mono text-slate-600 dark:text-slate-400 select-all break-all">
+                    https://ais-pre-24cbjoeogrliniurqyx3vo-381559712290.europe-west2.run.app
+                  </div>
                 </div>
               </div>
             </motion.div>
